@@ -6,7 +6,7 @@ const MONAD_TESTNET_CONFIG = {
   chainName: 'Monad Testnet',
   nativeCurrency: {
     name: 'Monad Token',
-    symbol: 'tMON', // Changed from MON to avoid MetaMask warning
+    symbol: 'MON', // Reverted to MON as per user's image
     decimals: 18,
   },
   rpcUrls: ['https://testnet-rpc.monad.xyz'],
