@@ -98,24 +98,23 @@ python src/main.py
 
 ## 📦 Deployment
 
-### Deploy to Vercel (Recommended)
+### Deploy to Netlify (Recommended)
 
 1. **Fork this repository** to your GitHub account
 
-2. **Connect to Vercel:**
-   - Go to [vercel.com](https://vercel.com)
-   - Click "New Project"
-   - Import your forked repository
-   - Vercel will auto-detect the React app
+2. **Connect to Netlify:**
+   - Go to [netlify.com](https://netlify.com)
+   - Click "Add new site" -> "Import an existing project"
+   - Connect your GitHub account and select your forked repository
 
 3. **Configure Build Settings:**
-   - Build Command: `npm run build`
-   - Output Directory: `dist`
-   - Install Command: `npm install`
+   - **Branch to deploy:** `master` (or your main branch)
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist`
 
 4. **Deploy:**
-   - Click "Deploy"
-   - Your app will be live at `https://your-project.vercel.app`
+   - Click "Deploy site"
+   - Your app will be live at `https://your-site-name.netlify.app`
 
 ### Deploy Backend (Optional)
 
