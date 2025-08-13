@@ -2,15 +2,15 @@ import { ethers } from 'ethers'
 
 // Monad Testnet configuration
 const MONAD_TESTNET_CONFIG = {
-  chainId: '0x29A', // 666 in hex
+  chainId: '0x27A7', // 10143 in hex
   chainName: 'Monad Testnet',
   nativeCurrency: {
     name: 'MON',
     symbol: 'MON',
     decimals: 18,
   },
-  rpcUrls: ['https://testnet1.monad.xyz'],
-  blockExplorerUrls: ['https://testnet1.monad.xyz'],
+  rpcUrls: ['https://testnet-rpc.monad.xyz'],
+  blockExplorerUrls: ['https://testnet.monadexplorer.com'],
 }
 
 // NFT Contract configuration
