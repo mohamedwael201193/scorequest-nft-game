@@ -5,8 +5,8 @@ const MONAD_TESTNET_CONFIG = {
   chainId: '0x27A7', // 10143 in hex
   chainName: 'Monad Testnet',
   nativeCurrency: {
-    name: 'MON',
-    symbol: 'MON',
+    name: 'Monad Token',
+    symbol: 'tMON', // Changed from MON to avoid MetaMask warning
     decimals: 18,
   },
   rpcUrls: ['https://testnet-rpc.monad.xyz'],
@@ -97,17 +97,34 @@ class Web3Service {
     }
 
     try {
-      // Request account access
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts',
-      })
+      const currentChainId = await window.ethereum.request({ method: 'eth_chainId' })
 
+      // If not on Monad Testnet, try to switch
+      if (currentChainId !== MONAD_TESTNET_CONFIG.chainId) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: MONAD_TESTNET_CONFIG.chainId }],
+          })
+        } catch (switchError) {
+          // If the chain is not added, add it
+          if (switchError.code === 4902) {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [MONAD_TESTNET_CONFIG],
+            })
+          } else {
+            throw switchError
+          }
+        }
+      }
+
+      // Request account access
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      
       if (accounts.length === 0) {
         throw new Error('No accounts found')
       }
-
-      // Switch to Monad Testnet
-      await this.switchToMonadTestnet()
 
       // Set up provider and signer
       this.provider = new ethers.BrowserProvider(window.ethereum)
@@ -121,6 +138,8 @@ class Web3Service {
         this.signer
       )
 
+      console.log(`Connected wallet: ${this.account}`)
+      
       return {
         account: this.account,
         chainId: await this.provider.getNetwork().then(n => n.chainId),
